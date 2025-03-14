@@ -22,13 +22,13 @@ pipeline {
 
         stage('Build Artifact') {
             steps {
-                sh 'zip -r portfolio.zip *'
+                sh 'zip -r portfolio.txt *'
             }
         }
 
         stage('Upload to S3') {
             steps {
-                sh 'aws s3 cp portfolio.zip s3://myartifacts-basis/'
+                sh 'aws s3 cp portfolio.txt s3://myartifacts-basis/'
             }
         }
     }
