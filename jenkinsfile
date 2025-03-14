@@ -14,22 +14,24 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Portfolio Script') {
             steps {
-                sh 'python3 portfolio.py'
+                // Run the Python script and save the output to portfolio.txt
+                sh 'python3 portfolio.py > portfolio.txt'
             }
         }
 
         stage('Build Artifact') {
             steps {
-                sh 'ls -alh > portfolio.txt'
-
+                // Create a zip file containing portfolio.txt
+                sh 'zip -r portfolio.zip portfolio.txt'
             }
         }
 
         stage('Upload to S3') {
             steps {
-                sh 'aws s3 cp portfolio.txt s3://myartifacts-basis/'
+                // Upload the zip file to S3
+                sh 'aws s3 cp portfolio.zip s3://myartifacts-basis/'
             }
         }
     }
