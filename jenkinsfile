@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/PolojuPoornachandar/portfolio.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip3 install -r requirements.txt || echo "No dependencies to install"'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'python3 portfolio.py'
+            }
+        }
+
+        stage('Build Artifact') {
+            steps {
+                sh 'zip -r portfolio.zip *'
+            }
+        }
+
+        stage('Upload to S3') {
+            steps {
+                sh 'aws s3 cp portfolio.zip s3://myartifacts-basis/'
+            }
+        }
+    }
+}
