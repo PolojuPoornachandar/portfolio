@@ -22,7 +22,8 @@ pipeline {
 
         stage('Build Artifact') {
             steps {
-                sh 'zip -r portfolio.txt *'
+                sh 'ls -alh > portfolio.txt'
+
             }
         }
 
