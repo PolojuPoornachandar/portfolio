@@ -21,17 +21,10 @@ pipeline {
             }
         }
 
-        stage('Build Artifact') {
+        stage('Upload portfolio.txt to S3') {
             steps {
-                // Create a zip file containing portfolio.txt
-                sh 'zip -r portfolio.zip portfolio.txt'
-            }
-        }
-
-        stage('Upload to S3') {
-            steps {
-                // Upload the zip file to S3
-                sh 'aws s3 cp portfolio.zip s3://myartifacts-basis/'
+                // Upload portfolio.txt to S3 (directly as text)
+                sh 'aws s3 cp portfolio.txt s3://myartifacts-basis/portfolio.txt'
             }
         }
     }
